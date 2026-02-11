@@ -122,6 +122,17 @@ public class InteractionController : MonoBehaviour
             return;
         }
 
+        IngredientCrate crate = target as IngredientCrate;
+        if (crate != null)
+        {
+            IInteractable spawned = crate.SpawnItem(holdPoint);
+            if (spawned != null)
+            {
+                heldItem = spawned;
+            }
+            return;
+        }
+
         target.PickUp(holdPoint);
         heldItem = target;
     }
