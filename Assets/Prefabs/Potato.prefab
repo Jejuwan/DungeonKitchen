@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3318891096259154056}
   - component: {fileID: 2071578815940322921}
   - component: {fileID: 5624861095040004996}
+  - component: {fileID: 4394824019628601017}
   m_Layer: 3
   m_Name: Potato
   m_TagString: Untagged
@@ -146,6 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d919d6e9723e6c740861aa1f383ebfa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ingredientType: 2
   processedPrefab: {fileID: 6015440122511949586, guid: 999ef9645f32d2247a5d4ed97b064c2b,
     type: 3}
   cookedPrefab: {fileID: 6015440122511949586, guid: 7a7fcdb36c4df534b9b687ad808ea2a7,
@@ -155,3 +157,27 @@ MonoBehaviour:
   isProcessed: 0
   isCooked: 0
   isBurnt: 0
+--- !u!114 &4394824019628601017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7667869904850187983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b156b5537e2e2ff43a911d822be7b37c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 2, z: 0}
+  iconScale: 0.2
+  sortingLayerName: UI
+  sortingOrder: 10
+  bubbleIcon: {fileID: 21300000, guid: 3e3136dc478f85a4dbe8ad3b5d19dc7d, type: 3}
+  ingredientOffset: {x: 0, y: 1, z: 0}
+  meatIcon: {fileID: 0}
+  fishIcon: {fileID: 0}
+  potatoIcon: {fileID: 21300000, guid: 624eec2673567d147928fdee3c76cb51, type: 3}
+  onionIcon: {fileID: 0}
+  tomatoIcon: {fileID: 0}
+  herbIcon: {fileID: 0}

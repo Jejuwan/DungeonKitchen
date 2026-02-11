@@ -4,6 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class IngredientInteractable : MonoBehaviour, IInteractable, IProcessable
 {
+    public IngredientType ingredientType;
     public GameObject processedPrefab;
     public GameObject cookedPrefab;
     public GameObject burntPrefab;
