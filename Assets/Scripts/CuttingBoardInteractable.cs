@@ -204,4 +204,3 @@ public class CuttingBoardInteractable : MonoBehaviour, IInteractable
     }
 }
 
-

@@ -33,6 +33,3 @@ public class PotInteractable : MonoBehaviour, IInteractable
     }
 }
 
-
-
-

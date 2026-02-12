@@ -101,4 +101,3 @@ public class IngredientInteractable : MonoBehaviour, IInteractable, IProcessable
     }
 }
 
-

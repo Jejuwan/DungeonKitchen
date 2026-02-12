@@ -16,6 +16,3 @@ public interface IProcessable
     GameObject ProcessedPrefab { get; }
 }
 
-
-
-
