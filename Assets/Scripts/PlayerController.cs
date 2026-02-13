@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private Vector3 moveInput;
     private Quaternion desiredRotation;
+    private bool movementLocked;
 
     private void Awake()
     {
@@ -20,6 +21,12 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
+        if (movementLocked)
+        {
+            moveInput = Vector3.zero;
+            return;
+        }
+
         float x = Input.GetAxisRaw("Horizontal");
         float z = Input.GetAxisRaw("Vertical");
 
@@ -34,6 +41,13 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (movementLocked)
+        {
+            // 이동 잠금 중에는 수평 속도를 강제로 0으로 유지
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+            return;
+        }
+
         Vector3 desiredVelocity = moveInput * moveSpeed;
 
         // 중력 등 Y축 속도는 유지하고, 수평 이동만 제어
@@ -43,6 +57,15 @@ public class PlayerController : MonoBehaviour
         {
             // 물리 업데이트에서 회전을 적용해 덜덜 떨림을 줄임
             rb.MoveRotation(desiredRotation);
+        }
+    }
+
+    public void SetMovementLocked(bool locked)
+    {
+        movementLocked = locked;
+        if (locked)
+        {
+            moveInput = Vector3.zero;
         }
     }
 }

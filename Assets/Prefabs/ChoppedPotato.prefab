@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 121251e073a0edc4ebd674c64c8fef0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 121251e073a0edc4ebd674c64c8fef0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 5131838475380222516}
   - component: {fileID: 7944034372327350577}
   m_Layer: 3
-  m_Name: ChoppedPrefab
+  m_Name: ChoppedPotato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -311,6 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d919d6e9723e6c740861aa1f383ebfa8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ingredientType: 0
   processedPrefab: {fileID: 6015440122511949586}
   cookedPrefab: {fileID: 6015440122511949586, guid: 7a7fcdb36c4df534b9b687ad808ea2a7,
     type: 3}
@@ -381,7 +382,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 121251e073a0edc4ebd674c64c8fef0d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

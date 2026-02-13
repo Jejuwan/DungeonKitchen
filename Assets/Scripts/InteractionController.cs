@@ -9,17 +9,28 @@ public class InteractionController : MonoBehaviour
     public KeyCode interactKey = KeyCode.Space;
 
     private IInteractable heldItem;
+    private PlayerController playerController;
+    private CuttingBoardInteractable activeBoardProcessing;
+    private bool isPlayerLockedByBoard;
+
+    private void Awake()
+    {
+        playerController = GetComponent<PlayerController>();
+    }
 
     private void Update()
     {
         IInteractable nearest = FindNearestInteractable();
-
-        HandleHoldInteraction(nearest);
+        UpdateBoardProcessingLock();
 
         if (Input.GetKeyDown(interactKey))
         {
             if (heldItem == null)
             {
+                if (TryStartBoardAutoProcess(nearest))
+                {
+                    return;
+                }
                 TryPickUp(nearest);
             }
             else
@@ -32,33 +43,88 @@ public class InteractionController : MonoBehaviour
         }
     }
 
-    private void HandleHoldInteraction(IInteractable nearest)
+    private bool TryStartBoardAutoProcess(IInteractable nearest)
     {
         if (heldItem != null)
         {
-            return;
+            return false;
         }
 
+        CuttingBoardInteractable board = ResolveBoard(nearest);
+        return StartBoardAutoProcess(board);
+    }
+
+    private bool StartBoardAutoProcess(CuttingBoardInteractable board)
+    {
+
+        if (board == null)
+        {
+            return false;
+        }
+
+        if (!board.StartProcess())
+        {
+            return false;
+        }
+
+        activeBoardProcessing = board;
+        SetPlayerMovementLocked(true);
+        isPlayerLockedByBoard = true;
+        return true;
+    }
+
+    private CuttingBoardInteractable ResolveBoard(IInteractable nearest)
+    {
         CuttingBoardInteractable board = nearest as CuttingBoardInteractable;
         if (board == null && nearest != null)
         {
             board = nearest.Root.GetComponentInParent<CuttingBoardInteractable>();
         }
 
-        if (board == null)
+        return board;
+    }
+
+    private CookingPot ResolveCookingPot(IInteractable target)
+    {
+        CookingPot pot = target as CookingPot;
+        if (pot == null && target != null)
+        {
+            pot = target.Root.GetComponentInParent<CookingPot>();
+        }
+
+        return pot;
+    }
+
+    private void UpdateBoardProcessingLock()
+    {
+        if (activeBoardProcessing == null)
+        {
+            if (isPlayerLockedByBoard)
+            {
+                SetPlayerMovementLocked(false);
+                isPlayerLockedByBoard = false;
+            }
+            return;
+        }
+
+        if (activeBoardProcessing.IsProcessing)
         {
             return;
         }
 
-        if (Input.GetKey(interactKey))
+        activeBoardProcessing = null;
+        SetPlayerMovementLocked(false);
+        isPlayerLockedByBoard = false;
+    }
+
+    private void SetPlayerMovementLocked(bool locked)
+    {
+        if (playerController == null)
         {
-            board.StartProcess();
+            return;
         }
 
-        if (Input.GetKeyUp(interactKey))
-        {
-            board.StopProcess();
-        }
+        playerController.SetMovementLocked(locked);
     }
 
     private IInteractable FindNearestInteractable()
@@ -100,7 +166,7 @@ public class InteractionController : MonoBehaviour
             return;
         }
 
-        CuttingBoardInteractable board = target as CuttingBoardInteractable;
+        CuttingBoardInteractable board = ResolveBoard(target);
         if (board != null)
         {
             IInteractable picked = board.TakeItem(holdPoint);
@@ -111,7 +177,7 @@ public class InteractionController : MonoBehaviour
             return;
         }
 
-        CookingPot pot = target as CookingPot;
+        CookingPot pot = ResolveCookingPot(target);
         if (pot != null)
         {
             IInteractable picked = pot.TakeItem(holdPoint);
@@ -148,6 +214,9 @@ public class InteractionController : MonoBehaviour
         if (placed)
         {
             heldItem = null;
+
+            CuttingBoardInteractable board = ResolveBoard(target);
+            StartBoardAutoProcess(board);
         }
 
         return placed;

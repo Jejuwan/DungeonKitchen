@@ -10,6 +10,7 @@ public class CuttingBoardInteractable : MonoBehaviour, IInteractable
     public Transform Root => transform;
     public bool CanPickUp => GetCurrentItem() != null && !isProcessing;
     public bool CanPlace => true;
+    public bool IsProcessing => isProcessing;
 
     private IInteractable currentItem;
     private bool isProcessing;
@@ -40,14 +41,15 @@ public class CuttingBoardInteractable : MonoBehaviour, IInteractable
         }
     }
 
-    public void StartProcess()
+    public bool StartProcess()
     {
         if (GetCurrentItem() == null || isProcessing || isProcessedReady)
         {
-            return;
+            return false;
         }
 
         isProcessing = true;
+        return true;
     }
 
     public void StopProcess()

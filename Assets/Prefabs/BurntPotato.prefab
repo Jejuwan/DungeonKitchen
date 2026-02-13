@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d820f84f7c8b6840966e4921a7d7c7c, type: 2}
+  - {fileID: 2100000, guid: 893da08cdae9de54abbfa687a36b34bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,7 +169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d820f84f7c8b6840966e4921a7d7c7c, type: 2}
+  - {fileID: 2100000, guid: 893da08cdae9de54abbfa687a36b34bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -227,7 +227,7 @@ GameObject:
   - component: {fileID: 5131838475380222516}
   - component: {fileID: 7944034372327350577}
   m_Layer: 3
-  m_Name: CookedPrefab
+  m_Name: BurntPotato
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,12 +313,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   processedPrefab: {fileID: 6015440122511949586, guid: 999ef9645f32d2247a5d4ed97b064c2b,
     type: 3}
-  cookedPrefab: {fileID: 6015440122511949586}
-  burntPrefab: {fileID: 6015440122511949586, guid: 95ae298713a3e664bb0b7e0a52c036a2,
+  cookedPrefab: {fileID: 6015440122511949586, guid: 7a7fcdb36c4df534b9b687ad808ea2a7,
     type: 3}
+  burntPrefab: {fileID: 6015440122511949586}
   isProcessed: 1
-  isCooked: 1
-  isBurnt: 0
+  isCooked: 0
+  isBurnt: 1
 --- !u!1 &7905848669715267992
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +381,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5d820f84f7c8b6840966e4921a7d7c7c, type: 2}
+  - {fileID: 2100000, guid: 893da08cdae9de54abbfa687a36b34bb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
