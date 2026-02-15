@@ -37,7 +37,10 @@ public class InteractionController : MonoBehaviour
             {
                 if (!TryPlace(nearest))
                 {
-                    DropHeldItem();
+                    if (CanDropHeldItem())
+                    {
+                        DropHeldItem();
+                    }
                 }
             }
         }
@@ -93,6 +96,45 @@ public class InteractionController : MonoBehaviour
         }
 
         return pot;
+    }
+
+    private TableInteractable ResolveTable(IInteractable target)
+    {
+        TableInteractable table = target as TableInteractable;
+        if (table == null && target != null)
+        {
+            table = target.Root.GetComponentInParent<TableInteractable>();
+        }
+
+        return table;
+    }
+
+    private IInteractable ResolvePlaceTarget(IInteractable target)
+    {
+        if (target == null)
+        {
+            return null;
+        }
+
+        IInteractable board = ResolveBoard(target);
+        if (board != null)
+        {
+            return board;
+        }
+
+        IInteractable pot = ResolveCookingPot(target);
+        if (pot != null)
+        {
+            return pot;
+        }
+
+        IInteractable table = ResolveTable(target);
+        if (table != null)
+        {
+            return table;
+        }
+
+        return target;
     }
 
     private void UpdateBoardProcessingLock()
@@ -188,10 +230,32 @@ public class InteractionController : MonoBehaviour
             return;
         }
 
+        TableInteractable table = ResolveTable(target);
+        if (table != null)
+        {
+            IInteractable picked = table.TakeItem(holdPoint);
+            if (picked != null)
+            {
+                heldItem = picked;
+            }
+            return;
+        }
+
         IngredientCrate crate = target as IngredientCrate;
         if (crate != null)
         {
             IInteractable spawned = crate.SpawnItem(holdPoint);
+            if (spawned != null)
+            {
+                heldItem = spawned;
+            }
+            return;
+        }
+
+        PlateRackInteractable plateRack = target as PlateRackInteractable;
+        if (plateRack != null)
+        {
+            IInteractable spawned = plateRack.SpawnPlate(holdPoint);
             if (spawned != null)
             {
                 heldItem = spawned;
@@ -205,21 +269,44 @@ public class InteractionController : MonoBehaviour
 
     private bool TryPlace(IInteractable target)
     {
-        if (target == null || !target.CanPlace || heldItem == null)
+        if (heldItem == null)
         {
             return false;
         }
 
-        bool placed = target.Place(heldItem);
+        IInteractable placeTarget = ResolvePlaceTarget(target);
+        if (placeTarget == null || !placeTarget.CanPlace)
+        {
+            return false;
+        }
+
+        // 접시는 빈 테이블에만 올릴 수 있음
+        if (heldItem is PlateInteractable && ResolveTable(placeTarget) == null)
+        {
+            return false;
+        }
+
+        bool placed = placeTarget.Place(heldItem);
         if (placed)
         {
             heldItem = null;
 
-            CuttingBoardInteractable board = ResolveBoard(target);
+            CuttingBoardInteractable board = ResolveBoard(placeTarget);
             StartBoardAutoProcess(board);
         }
 
         return placed;
+    }
+
+    private bool CanDropHeldItem()
+    {
+        if (heldItem == null)
+        {
+            return false;
+        }
+
+        // 접시는 바닥에 내려놓을 수 없음
+        return !(heldItem is PlateInteractable);
     }
 
     private void DropHeldItem()
